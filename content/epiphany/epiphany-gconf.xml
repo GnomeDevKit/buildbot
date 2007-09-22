@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<gconf>
+        <entry name="active_extensions" mtime="1172676030" type="list" ltype="string">
+                <li type="string">
+                        <stringvalue>tab-groups</stringvalue>
+                </li>
+                <li type="string">
+                        <stringvalue>extensions-manager-ui</stringvalue>
+                </li>
+        </entry>
+        <entry name="automatic_downloads" mtime="1169497716" type="bool" value="false">
+        </entry>
+        <entry name="homepage" mtime="1173408026" type="string">
+                <stringvalue>http://gnome.org</stringvalue>
+        </entry>
+</gconf>
