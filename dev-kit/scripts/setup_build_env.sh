@@ -15,6 +15,7 @@ echo "lookaside    $HOME/conary/cache
 buildPath    $HOME/conary/builds
 name         $fullname
 contact      $email
+cleanAfterCook  False
 
 [gnome:trunk]
 buildLabel  gnome.rpath.org@gnome:trunk
