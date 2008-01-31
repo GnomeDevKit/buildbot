@@ -31,8 +31,8 @@ currentDir=`pwd`
 context="gnome:trunk"
 
 #Note each trove in this list needs to end with a ","
-troves="GConf,gedit,glade,gnome-applets,gnome-backgrounds,gnome-common,gnome-control-center,gnome-desktop,gnome-doc-utils,gnome-icon-theme,gnome-keyring-manager,gnome-media,gnome-menus,gnome-mime-data,gnome-nettool,gnome-panel,gnome-power-manager,gnome-python,gnome-python-desktop,gnome-screensaver,gnome-session,gnome-system-monitor,gnome-terminal,gnome-themes,gnome-user-docs,gnome-utils,gnome-volume-manager,gok,gtk-doc,gtk-engines,gtkhtml,gtksourceview,gucharmap,intltool,libIDL,libbonobo,libbonoboui,libgail-gnome,libglade,libgnome,libgnomecanvas,libgnomecups,libgnomekbd,libgnomeprint,libgnomeprintui,libgnomeui,libgtop,librsvg,libsoup,libwnck,libxml++,metacity,nautilus-cd-burner,orca,pango,pygobject,pyorbit,seahorse,tomboy,totem,vino,vte,yelp,zenity,totem-pl-parser,gnome-vfs,gnome-keyring,glib,glibmm,gnome-mag,gnome-speech,liboobs,eel,nautilus,gnome-system-tools,gtkmm,gdm,evolution-data-server,evolution,evolution-exchange,evolution-webcal,epiphany,epiphany-extensions,empathy,rhythmbox,cheese,vinagre,conduit,pygtk,"
-blacklist="gnome-common,gtk-doc,intltool,gnome-vfs,gnome-keyring,glibmm,gnome-mag,gnome-speech,liboobs,gnome-system-tools,gtkmm,gnome-terminal,eel,nautilus,gdm,evolution-exchange,pango,gnome-doc-utils,"
+troves="GConf,gedit,glade,gnome-applets,gnome-backgrounds,gnome-common,gnome-control-center,gnome-desktop,gnome-doc-utils,gnome-icon-theme,gnome-keyring-manager,gnome-media,gnome-menus,gnome-mime-data,gnome-nettool,gnome-panel,gnome-power-manager,gnome-python,gnome-python-desktop,gnome-screensaver,gnome-session,gnome-system-monitor,gnome-terminal,gnome-themes,gnome-user-docs,gnome-utils,gnome-volume-manager,gok,gtk-doc,gtk-engines,gtkhtml,gtksourceview,gucharmap,intltool,libIDL,libbonobo,libbonoboui,libgail-gnome,libglade,libgnome,libgnomecanvas,libgnomecups,libgnomekbd,libgnomeprint,libgnomeprintui,libgnomeui,libgtop,librsvg,libsoup,libwnck,libxml++,metacity,nautilus-cd-burner,orca,pango,pygobject,pyorbit,seahorse,tomboy,totem,vino,vte,yelp,zenity,totem-pl-parser,gnome-vfs,gnome-keyring,glib,glibmm,gnome-mag,gnome-speech,liboobs,eel,nautilus,gnome-system-tools,gtkmm,gdm,evolution-data-server,evolution,evolution-exchange,evolution-webcal,epiphany,epiphany-extensions,empathy,rhythmbox,cheese,vinagre,conduit,pygtk,vala,gvfs,banshee,gtk,"
+blacklist="gnome-common,gtk-doc,intltool,gnome-vfs,gnome-keyring,glibmm,gnome-mag,gnome-speech,liboobs,gnome-system-tools,gtkmm,gnome-terminal,eel,nautilus,gdm,evolution-exchange,gnome-doc-utils,banshee,"
 
 blacklist=`echo "$blacklist" | sed "s/,/ /g"`
 echo Current Black list includes:
@@ -76,17 +76,25 @@ then
     do
         lastestBuiltVersion=`conary rq $trove=gnome.rpath.org@gnome:trunk |awk -F '/' '{print $2}'|awk -F '-' '{print $1}'`
         lastestSourceVersion=`conary rq $trove:source=gnome.rpath.org@gnome:trunk |awk -F '/' '{print $2}'|awk -F '-' '{print $1}'`
-        if [ $lastestSourceVersion != $lastestBuiltVersion ]
+        if [ -n $lastestSourceVersion ] || [ -n $lastestBuiltVersion ]
+        then
+            echo "Either source or binary version is unknown"
+            tobuild="$tobuild $trove"
+        elif [ $lastestSourceVersion != $lastestBuiltVersion ]
         then
             echo "Latest source version of $trove is: $lastestSourceVersion"
             echo "Latest built version of $trove is: $lastestBuiltVersion"
             tobuild="$tobuild $trove"
+            #tobuild="$tobuild,$trove"
         fi
     done
 
     echo "building $tobuild"
     
+    #jobId=` rmake build --quiet --no-watch --context $context \{$tobuild\}\[\'~!builddocs\'\]\{x86\} \{$tobuild\}\[\'~!builddocs\'\]\{x86_64\}`
+    #jobId=` rmake build --quiet --no-watch --context $context \{$tobuild\}\[\'~!builddocs\'\]\{x86\}`
     jobId=`echo $tobuild | xargs rmake build --quiet --no-watch --context $context`
+
     #jobId=2102
     echo "Your Job ID is $jobId"
     status=`rmake q $jobId | grep $jobId | awk '{print $2}'`
