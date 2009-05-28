@@ -1,0 +1,7 @@
+[gnome:trunk]                                                                   
+buildLabel gnome.rpath.org@gnome:trunk                                          
+installLabelPath gnome.rpath.org@gnome:trunk foresight.rpath.org@fl:2-devel conary.rpath.com@rpl:2-qa
+resolveTroves gtk=gnome.rpath.org@gnome:trunk                           
+resolveTroves group-world=gnome.rpath.org@gnome:trunk                           
+resolveTroves group-world=foresight.rpath.org@fl:2-devel                        
+resolveTrovesOnly   False
