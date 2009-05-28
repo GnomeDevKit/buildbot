@@ -9,9 +9,9 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 
-usage() 
+usage()
 {
-    echo "usage: refresh-gnome [update|build|bump]"
+    echo "usage: refresh-gnome [update|build]"
     exit
 }
 
@@ -20,7 +20,7 @@ then
     usage
 fi
 
-if [ ! "$1" = "update" ] && [ ! "$1" = "build" ] && [ ! "$1" = "bump" ];
+if [ ! "$1" = "update" ] && [ ! "$1" = "build" ];
 then
     usage
 fi
@@ -30,39 +30,54 @@ workingDir=$HOME/conary/gnome/trunk
 currentDir=`pwd`
 context="gnome:trunk"
 
-#Note each trove in this list needs to end with a ","
-troves="GConf,gedit,glade,gnome-applets,gnome-backgrounds,gnome-common,gnome-control-center,gnome-desktop,gnome-doc-utils,gnome-icon-theme,gnome-keyring-manager,gnome-media,gnome-menus,gnome-mime-data,gnome-nettool,gnome-panel,gnome-power-manager,gnome-python,gnome-python-desktop,gnome-screensaver,gnome-session,gnome-system-monitor,gnome-terminal,gnome-themes,gnome-user-docs,gnome-utils,gnome-volume-manager,gok,gtk-doc,gtk-engines,gtkhtml,gtksourceview,gucharmap,intltool,libIDL,libbonobo,libbonoboui,libgail-gnome,libglade,libgnome,libgnomecanvas,libgnomecups,libgnomekbd,libgnomeprint,libgnomeprintui,libgnomeui,libgtop,librsvg,libsoup,libwnck,libxml++,metacity,nautilus-cd-burner,orca,pango,pygobject,pyorbit,seahorse,tomboy,totem,vino,vte,yelp,zenity,totem-pl-parser,gnome-vfs,gnome-keyring,glib,glibmm,gnome-mag,gnome-speech,liboobs,eel,nautilus,gnome-system-tools,gtkmm,gdm,evolution-data-server,evolution,evolution-exchange,evolution-webcal,epiphany,epiphany-extensions,empathy,rhythmbox,cheese,vinagre,conduit,pygtk,vala,gvfs,banshee,gtk,libgweather,gnome-games,gnome-settings-daemon,"
-blacklist="gnome-common,gnome-vfs,gnome-keyring,glibmm,gnome-mag,gnome-speech,liboobs,gtkmm,gnome-doc-utils,banshee,pygtk,gtk-doc,"
-
-blacklist=`echo "$blacklist" | sed "s/,/ /g"`
-echo Current Black list includes:
-
-for i in $blacklist;
-do
-    echo $i
-    troves=`echo "$troves" | sed "s/$i,/ /g"`
-done
-troves=`echo "$troves" | sed "s/,/ /g"`
+troves=`sort all-modules blacklist | uniq --unique`
+echo Current blacklist includes:
+cat blacklist
+echo
 
 if [ $action = "update" ];
 then
-    #echo "deleting any NEGATIVE cache in your cache dir"
-    #rm -rf $HOME/conary/cache/NEGATIVE
+    echo --Updating...
     cd $workingDir
     echo $troves | xargs cvc co
     for trove in $troves;
     do
-        module=`echo $trove | tr A-Z a-z`
-        lastestVersion=`conary rq $trove:source=gnome.rpath.org@gnome:trunk |awk -F '/' '{print $2}'|awk -F '-' '{print $1}'`
-        lastestRevision=`/usr/bin/svn log -q --limit 1 http://svn.gnome.org/svn/$module/trunk/ |grep -v '\-\-\-'|awk '{print $1}'`
-        echo "Latest version of $trove in conary is: $lastestVersion"
-        echo "Latest version of $module in svn is: $lastestRevision"
-        if [ $lastestVersion != $lastestRevision ]
+        case $trove in
+            GConf)
+                module="gconf"
+                ;;
+            glade)
+                module="glade3"
+                ;;
+            gtk)
+                module="gtk+"
+                ;;
+            *)
+                module=$trove
+                ;;
+            esac
+        latestVersion=`
+            conary rq $trove:source=gnome.rpath.org@gnome:trunk --labels |
+            awk -F '/' '{print $2}' |
+            awk -F '-' '{print $1}'`
+        # use '/bin/grep' to avoid user defined alias
+        latestRevision=`
+            /usr/bin/git ls-remote --heads git://git.gnome.org/$module |
+            /bin/grep 'refs/heads/master' |
+            awk '{print $1}'`
+        # keep aligned with gnomepackage;
+        # now use 4 chars from revison as version
+        latestRevision=r${latestRevision:0:4}
+        printf "Latest version  of %-20s in conary is:%15s\n" $trove  $latestVersion
+        printf "Latest revision of %-20s in git    is:%15s\n" $module $latestRevision
+        revision_in_conary=`echo $latestVersion | cut -f2 -d '+'`
+        if [ "${revision_in_conary:0:5}" != "$latestRevision" ]
         then
             echo "refreshing $trove"
             cd $trove
-            cvc refresh $trove--.tar.bz2 >/dev/null 2>&1
-            cvc commit --message "New snapshot" >/dev/null 2>&1
+            cvc refresh >/dev/null 2>&1 || echo "error refreshing $trove"
+            cvc commit --message "New snapshot" >/dev/null 2>&1 ||
+                echo "error committing $trove"
             cd - >/dev/null 2>&1
         fi
     done
@@ -70,38 +85,38 @@ then
 
 elif [ $action = "build" ];
 then
+    echo --Building...
     tobuild=""
-    echo $troves
     for trove in $troves;
     do
-        lastestBuiltVersion=`conary rq $trove=gnome.rpath.org@gnome:trunk |awk -F '/' '{print $2}'|awk -F '-' '{print $1}'`
-        lastestSourceVersion=`conary rq $trove:source=gnome.rpath.org@gnome:trunk |awk -F '/' '{print $2}'|awk -F '-' '{print $1}'`
-        if [ -z $lastestSourceVersion ] || [ -z $lastestBuiltVersion ]
+        latestBuiltVersion=`
+            conary rq $trove=gnome.rpath.org@gnome:trunk[is:x86] --labels |
+            awk -F '/' '{print $2}'|
+            awk -F '-' '{print $1}'`
+        latestSourceVersion=`
+            conary rq $trove:source=gnome.rpath.org@gnome:trunk --labels |
+            awk -F '/' '{print $2}' |
+            awk -F '-' '{print $1}'`
+        if [ -z $latestSourceVersion ] || [ -z $latestBuiltVersion ]
         then
-            echo "Either source or binary version is unknown: $trove"
+            echo "Either source or binary version is unknown"
             tobuild="$tobuild $trove"
-        elif [ $lastestSourceVersion != $lastestBuiltVersion ]
+        elif [ $latestSourceVersion != $latestBuiltVersion ]
         then
-            echo "Latest source version of $trove is: $lastestSourceVersion"
-            echo "Latest built version of $trove is: $lastestBuiltVersion"
+            printf "Latest source version of %-10s is: %12s\n" $trove $latestSourceVersion
+            printf "Latest built  version of %-10s is: %12s\n" $trove $latestBuiltVersion
             tobuild="$tobuild $trove"
-            #tobuild="$tobuild,$trove"
         fi
     done
 
     echo "building $tobuild"
-    
-    #jobId=` rmake build --quiet --no-watch --context $context \{$tobuild\}\[\'~!builddocs\'\]\{x86\} \{$tobuild\}\[\'~!builddocs\'\]\{x86_64\}`
-    #jobId=` rmake build --quiet --no-watch --context $context \{$tobuild\}\[\'~!builddocs\'\]\{x86\}`
     jobId=`echo $tobuild | xargs rmake build --quiet --no-watch --context $context`
 
-    #jobId=2102
     echo "Your Job ID is $jobId"
-    status=`rmake q $jobId | grep $jobId | awk '{print $2}'`
-    while [ $status = "Started" ];
+    while [ "$status" != "Built" ] && [ "$status" != "Failed" ];
     do
         sleep 300
-        status=`rmake q $jobId | grep $jobId | awk '{print $2}'`
+        status=`rmake q $jobId | grep "^$jobId" | awk '{print $2}'`
     done
     if [ $status = "Built" ];
     then
@@ -110,17 +125,4 @@ then
         echo "Build $jobId Failed"
         rmake commit $jobId
     fi
-elif [ $action = "bump" ];
-then
-    cd $workingDir
-    echo "Bumping group version"
-    cvc co --context $context group-world
-    cd group-world
-    echo "" >> group-world.recipe
-    cvc commit --context $context --message "Group bump"
-    echo "Group version bumped"
-    echo "Cooking group-world"
-    ./cook.sh
-    cd $currentDir
 fi
-
