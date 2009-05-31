@@ -11,7 +11,7 @@
 
 usage()
 {
-    echo "usage: refresh-gnome [update|build]"
+    echo "usage: refresh-gnome (update | build) [trove-list]"
     exit
 }
 
@@ -30,9 +30,15 @@ workingDir=$HOME/conary/gnome/trunk
 currentDir=`pwd`
 context="gnome:trunk"
 
-troves=`sort all-modules blacklist | uniq --unique`
-echo Current blacklist includes:
-cat blacklist
+if [ $# -gt 1 ];
+then
+    shift
+    troves=$*
+else
+    troves=`sort all-modules blacklist | uniq --unique`
+    echo Current blacklist includes:
+    cat blacklist
+fi
 echo
 
 if [ $action = "update" ];
