@@ -1,7 +1,25 @@
-[gnome:trunk]                                                                   
-buildLabel gnome.rpath.org@gnome:trunk                                          
-installLabelPath gnome.rpath.org@gnome:trunk foresight.rpath.org@fl:2-devel conary.rpath.com@rpl:2-qa
-resolveTroves gtk=gnome.rpath.org@gnome:trunk                           
-resolveTroves group-world=gnome.rpath.org@gnome:trunk                           
-resolveTroves group-world=foresight.rpath.org@fl:2-devel                        
+[gnome:trunk]
+
 resolveTrovesOnly   False
+buildLabel          gnome.rpath.org@gnome:trunk
+
+resolveTroves boo=foresight.rpath.org@fl:2-devel
+resolveTroves intltool=foresight.rpath.org@fl:2-devel
+resolveTroves WebKit=foresight.rpath.org@fl:2-devel
+resolveTroves telepathy-farsight=foresight.rpath.org@fl:2-devel
+resolveTroves gst-plugins-base=foresight.rpath.org@fl:2-devel
+
+resolveTroves totem-pl-parser=gnome.rpath.org@gnome:trunk
+resolveTroves taglib-sharp=gnome.rpath.org@gnome:trunk
+resolveTroves telepathy-glib=gnome.rpath.org@gnome:trunk
+resolveTroves evolution-data-server=gnome.rpath.org@gnome:trunk
+resolveTroves clutter=gnome.rpath.org@gnome:trunk
+resolveTroves clutter-gtk=gnome.rpath.org@gnome:trunk
+resolveTroves DeviceKit-power=gnome.rpath.org@gnome:trunk
+resolveTroves gir-repository=gnome.rpath.org@gnome:trunk
+resolveTroves gjs=gnome.rpath.org@gnome:trunk
+resolveTroves gobject-introspection=gnome.rpath.org@gnome:trunk
+resolveTroves mutter=gnome.rpath.org@gnome:trunk
+
+resolveTroves group-world=gnome.rpath.org@gnome:trunk
+resolveTroves group-world=foresight.rpath.org@fl:2-devel
