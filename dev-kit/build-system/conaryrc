@@ -1,6 +1,9 @@
 [gnome:trunk]
-buildLabel    gnome.rpath.org@gnome:trunk
-configComponent True
-shortenGroupFlavors  True
-flavor ~!builddocs,~!bootstrap,~buildtests,desktop,~!dom0,~!domU,gnome,~grub.static,~!kernel.debug,~!kernel.debugdata,~!kernel.numa,~!kernel.pae,~kernel.smp,krb,ldap,pam,qt,~!xen is: x86(~cmov, ~i486, ~i586, ~i686, ~mmx, ~nx, ~sse, ~sse2)
-buildFlavor !builddocs,~!bootstrap,~buildtests,desktop,~!dom0,~!domU,gnome,~grub.static,~!kernel.debug,~!kernel.debugdata,~!kernel.numa,~!kernel.pae,~kernel.smp,krb,ldap,pam,qt,~!xen is: x86(~cmov, ~i486, ~i586, ~i686, ~mmx, ~nx, ~sse, ~sse2)                                                                            
+buildLabel          gnome.rpath.org@gnome:trunk
+installLabelPath    gnome.rpath.org@gnome:trunk foresight.rpath.org@fl:2-devel conary.rpath.com@rpl:2-qa
+
+configComponent     True
+shortenGroupFlavors True
+
+flavor         ~!builddocs,~!bootstrap,~buildtests,desktop,~!dom0,~!domU,gnome,~grub.static,~!kernel.debug,~!kernel.debugdata,~!kernel.numa,~!kernel.pae,~kernel.smp,krb,ldap,pam,qt,~!xen is: x86(~cmov, ~i486, ~i586, ~i686, ~mmx, ~nx, ~sse, ~sse2)
+buildFlavor    !builddocs,~!bootstrap,~buildtests,desktop,~!dom0,~!domU,gnome,~grub.static,~!kernel.debug,~!kernel.debugdata,~!kernel.numa,~!kernel.pae,~kernel.smp,krb,ldap,pam,qt,~!xen is: x86(~cmov, ~i486, ~i586, ~i686, ~mmx, ~nx, ~sse, ~sse2)
