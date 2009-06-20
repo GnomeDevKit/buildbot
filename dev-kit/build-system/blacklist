@@ -1,3 +1,5 @@
+banshee
+evolution
 gnome-control-center
 gnome-power-manager
 gnome-python
@@ -6,8 +8,3 @@ gtk
 intltool
 liboobs
 rhythmbox
-totem
-banshee
-glibmm
-gnome-shell
-conduit
