@@ -1,0 +1,12 @@
+[gnome:trunk]
+
+resolveTrovesOnly   True
+buildLabel          gnome.rpath.org@gnome:trunk
+
+resolveTroves automake=foresight.rpath.org@fl:2-devel
+resolveTroves shared-mime-info:config=foresight.rpath.org@fl:2-devel
+
+resolveTroves gir-repository=gnome.rpath.org@gnome:trunk
+
+resolveTroves group-world=gnome.rpath.org@gnome:trunk
+resolveTroves group-world=foresight.rpath.org@fl:2-devel
