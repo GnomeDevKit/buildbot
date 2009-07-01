@@ -21,6 +21,6 @@ else
         cd $workingDir
         cvc co $package
         cd $workingDir/$package
-        cvc refresh $package--.tar.bz2
+        cvc refresh
         echo Your checkout can be found at $cacheDir/$package/git.gnome.org_"$package"_/git
 fi
