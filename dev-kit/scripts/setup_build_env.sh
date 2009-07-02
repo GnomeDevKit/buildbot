@@ -11,8 +11,8 @@
 
 
 create_conaryrc() {
-echo "lookaside    $HOME/conary/cache
-buildPath    $HOME/conary/builds
+echo "lookaside    $HOME/source/cache
+buildPath    $HOME/source/builds
 name         $fullname
 contact      $email
 cleanAfterCook  False
@@ -23,9 +23,10 @@ buildLabel  gnome.rpath.org@gnome:trunk
 }
 
 make_dirs() {
-    mkdir -p $HOME/conary/cache
-    mkdir -p $HOME/conary/builds
-    mkdir -p $HOME/conary/gnome.rpath.org/gnome/trunk
+
+    mkdir -p $HOME/source/cache
+    mkdir -p $HOME/source/builds
+    mkdir -p $HOME/source/gnome
 }
 
 echo "setup_build_env.sh is a script to help automate setting up a build environment for the gnome developer kit."
@@ -40,8 +41,8 @@ else
         read -p "E-mail Address: " email
         create_conaryrc
         make_dirs
-        cd $HOME/conary/gnome.rpath.org/gnome/trunk
+        cd $HOME/source/gnome
         cvc context gnome:trunk
-        echo "Created build environment, you will find your working dir $HOME/conary/gnome.rpath.org/gnome/trunk"
+        echo "Created build environment, you will find your working directory at $HOME/source/gnome"
 fi
 

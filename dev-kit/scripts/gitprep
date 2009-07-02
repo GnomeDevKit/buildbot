@@ -10,8 +10,8 @@
 # (at your option) any later version.
 
 package=$1 
-workingDir=$HOME/conary/gnome.rpath.org/gnome/trunk
-cacheDir=$HOME/conary/cache
+workingDir=$HOME/source/gnome
+cacheDir=$HOME/source/cache
 
 if  [ $# -ne 1  ]
 then
@@ -22,5 +22,6 @@ else
         cvc co $package
         cd $workingDir/$package
         cvc refresh
-        echo Your checkout can be found at $cacheDir/$package/git.gnome.org_"$package"_/git
+        echo Your source checkout can be found at $cacheDir/$package/git.gnome.org_"$package"_/git
+        echo Your package checkout can be found at $workingDir/$package/
 fi
