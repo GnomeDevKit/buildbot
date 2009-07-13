@@ -30,7 +30,7 @@ workingDir=$HOME/conary/gnome/trunk
 currentDir=`pwd`
 context="gnome:trunk"
 
-if [ $# -gt 1 ];
+if [ $# -gt 1 ]; # only work on specific pkgs if we got commandline arguments
 then
     shift
     troves=$*
