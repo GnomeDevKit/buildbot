@@ -8,3 +8,8 @@ gtk
 intltool
 liboobs
 rhythmbox
+gnome-games
+mutter
+glibmm
+gvfs
+nautilus
