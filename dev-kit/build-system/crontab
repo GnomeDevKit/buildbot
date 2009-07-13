@@ -1,6 +1,6 @@
-SHELL=/bin/bash                                                                                                                                      
-PATH=/sbin:/bin:/usr/sbin:/usr/bin                                                                                                                   
-MAILTO=ken                                                                                                                                           
-HOME=/home/ken                                                                                                                                       
-                                                                                                                                                     
-0 0 * * * $HOME/src/gnome-live/dev-kit/build-system/cron.sh 
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=<mail>
+HOME=/home/<user>
+
+10 21 * * * /home/shared/GNOME/gnome-live/dev-kit/build-system/cron.sh > /home/<user>/cronlog
