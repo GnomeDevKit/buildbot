@@ -39,8 +39,14 @@ else
     echo Current blacklist includes:
     cat blacklist
 fi
-echo
 
+if [[ ! $troves ]]
+then
+    echo "No packages to process"
+    exit
+fi
+
+echo
 if [ $action = "update" ];
 then
     echo --Updating...
