@@ -1,5 +1,7 @@
 GConf
+alacarte
 banshee
+brasero
 cheese
 conduit
 eel
@@ -38,6 +40,7 @@ gnome-python
 gnome-python-desktop
 gnome-screensaver
 gnome-session
+gnome-shell
 gnome-speech
 gnome-system-monitor
 gnome-system-tools
@@ -57,6 +60,7 @@ gtkmm
 gtksourceview
 gucharmap
 gvfs
+hamster-applet
 intltool
 libIDL
 libbonobo
@@ -97,4 +101,3 @@ vino
 vte
 yelp
 zenity
-gnome-shell

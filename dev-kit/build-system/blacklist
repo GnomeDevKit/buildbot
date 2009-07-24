@@ -1,5 +1,7 @@
 banshee
 evolution
+evolution-data-server
+evolution-exchange
 gnome-control-center
 gnome-power-manager
 gnome-python
@@ -8,8 +10,5 @@ gtk
 intltool
 liboobs
 rhythmbox
-gnome-games
-mutter
-glibmm
-gvfs
-nautilus
+totem
+gok
