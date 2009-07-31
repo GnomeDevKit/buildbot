@@ -18,6 +18,7 @@
     <foaf:Person>
       <foaf:name>Zhang Sen</foaf:name>
       <foaf:mbox rdf:resource="mailto:zh.jesse@gmail.com" />
+      <gnome:userid></gnome:userid>
     </foaf:Person>
   </maintainer>
 </Project>
