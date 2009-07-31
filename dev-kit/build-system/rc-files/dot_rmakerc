@@ -3,6 +3,9 @@
 resolveTrovesOnly   True
 buildLabel          gnome.rpath.org@gnome:trunk
 
+# needed by vinagre
+resolveTroves shared-mime-info:config=foresight.rpath.org@fl:2-devel
+
 # use gnome:trunk's, instead of from fl:2-devel; should be in group-world.recipe
 resolveTroves WebKit=gnome.rpath.org@gnome:trunk
 resolveTroves gmime=gnome.rpath.org@gnome:trunk
