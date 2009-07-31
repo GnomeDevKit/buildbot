@@ -16,7 +16,7 @@
       <gnome:userid>kvandine</gnome:userid>
     </foaf:Person>
     <foaf:Person>
-      <foaf:name>Zhang Sen<zh.jesse@gmail.com></foaf:name>
+      <foaf:name>Zhang Sen</foaf:name>
       <foaf:mbox rdf:resource="mailto:zh.jesse@gmail.com" />
     </foaf:Person>
   </maintainer>
