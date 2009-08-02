@@ -1,14 +1,12 @@
-banshee
 evolution
 evolution-data-server
 evolution-exchange
-gnome-control-center
+gnome-media
 gnome-power-manager
 gnome-python
 gnome-python-desktop
+gnome-shell
 gok
 gtk
 intltool
-liboobs
-rhythmbox
 totem
