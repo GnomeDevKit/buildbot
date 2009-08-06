@@ -1,5 +1,6 @@
 GConf
 alacarte
+at-spi
 banshee
 brasero
 cheese
@@ -12,6 +13,7 @@ evolution
 evolution-data-server
 evolution-exchange
 evolution-webcal
+gcalctool
 gdm
 gedit
 gir-repository
