@@ -1,3 +1,9 @@
-** GNOME Live **
+** GNOME Developer Kit **
 
-Things that go on the Live images can be found here.
+Here are some scripts for maintaining the Gnome Developer Kit
+(http://live.gnome.org/GnomeDeveloperKit).
+
+Maintenance has gone to github in order for easy share between the several
+maintainers, so we can avoid asking for accounts on git.gnome.org.
+
+[0]. http://github.com/zhangsen/gnome-developer-kit/tree
