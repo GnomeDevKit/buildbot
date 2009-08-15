@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]
+then
+    echo 'Usage: check-pc <pc-filename>'
+    exit
+fi
+
+for app in $*;
+do
+    if [ $# -gt 1 ]
+    then
+        echo "$app"
+    fi
+    pcfile=/usr/lib/pkgconfig/$app.pc
+    pkg=`conary rq --path $pcfile --context 'gnome:trunk'`
+    if [ -n "$pkg" ]
+    then
+        echo "$pkg"
+    else
+        echo "not found in gnome:trunk"
+    fi
+done
