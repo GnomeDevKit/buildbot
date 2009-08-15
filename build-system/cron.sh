@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/shared/GNOME/gnome-live/dev-kit/build-system
+cd /home/shared/GNOME/gnome-live/build-system
 ./refresh-gnome update
 ./refresh-gnome build
 sleep 300
