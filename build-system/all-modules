@@ -15,6 +15,7 @@ evolution-exchange
 evolution-webcal
 file-roller
 gcalctool
+gconf-editor
 gdm
 gedit
 gir-repository
