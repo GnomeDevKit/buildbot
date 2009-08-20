@@ -2,7 +2,6 @@ GConf
 evolution-exchange
 glibmm
 gnome-media
-gnome-power-manager
 gnome-python
 gnome-python-desktop
 gtkmm
