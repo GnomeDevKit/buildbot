@@ -4,5 +4,6 @@ glibmm
 gnome-media
 gnome-python
 gnome-python-desktop
+gnome-system-tools
 gtkmm
 intltool
