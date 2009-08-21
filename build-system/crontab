@@ -3,4 +3,4 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 MAILTO=<mail>
 HOME=/home/<user>
 
-10 21 * * * /home/shared/GNOME/gnome-live/build-system/cron.sh > /home/<user>/cronlog
+10 21 * * * /home/shared/GNOME/gnome-live/build-system/cron.sh > /home/<user>/cronlog 2>&1
