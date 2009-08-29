@@ -1,0 +1,216 @@
+#
+# Copyright (c) 2004-2007 rPath, Inc.
+# This file is distributed under the terms of the MIT License.
+# A copy is available at http://www.rpath.com/permanent/mit-license.html
+#
+
+import datetime
+subprocess=__import__('subprocess')
+
+def _getGitRevision(name, gitUrl, branch):
+    p = subprocess.Popen(["/usr/bin/git", "ls-remote", "--heads",
+                        gitUrl,
+                        branch],
+                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                        env={"HOME": "/tmp/"})
+    p.wait()
+    data = p.stdout.read().strip()
+    if p.returncode != 0:
+        print "revision not retrieved for branch %s on %s\n" % (branch, gitUrl)
+        return
+    return revision
+
+class GnomePackageRecipe(CPackageRecipe):
+    buildRequires = [
+'automake:runtime', 'dbus-glib:devel', 'dbus-glib:devellib', 'dbus:devel',
+'docbook-dtds:data', 'expat:devel', 'file:runtime', 'gcc-c++:runtime',
+'gettext:devel', 'gettext:runtime', 'git:runtime', 'glib:devel', 'glib:runtime',
+'gnome-common:devel', 'gnome-common:runtime', 'gnome-doc-utils:devel',
+'gnome-doc-utils:runtime', 'gtk-doc:devel', 'gtk-doc:runtime', 'gtk:devel',
+'intltool:runtime', 'libICE:devel', 'libSM:devel', 'libX11:devel',
+'libXau:devel', 'libXdmcp:devel', 'libXext:devel', 'libXi:devel',
+'libXinerama:devellib', 'libXrender:devel', 'libXt:devel', 'libdmx:devel',
+'libtool:devel', 'libtool:runtime', 'libxslt:runtime', 'pkgconfig:devel',
+'subversion:runtime', 'which:runtime', 'zlib:devel']
+
+    name = 'gnomepackage'
+    majversion = '2.27'
+    version = datetime.date.today().strftime("%Y%m%d")
+
+    extraConfig = ''
+    preConfigure = ''
+    preMake = ''
+    preMakeInstall = 'GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1'
+    makeArgs = ''
+    makeInstallArgs = ''
+    configureName = 'configure'
+
+    # set this to the URL of a source archive if the package
+    # is not on GNOME's ftp server.
+    externalArchive = None
+    svnUrl = None
+    gitUrl = "git://git.gnome.org/%s" + name
+
+    # list to hold patches
+    patches = []
+    # optional autoGen variable to set what command to run when needing to run autogen.sh
+    autoGen = 'NOCONFIGURE=yes ./autogen.sh'
+
+    # standard GNOME docs
+    docs = []
+
+    if Use.builddocs:
+        extraConfig += ' --enable-gtk-doc'
+    else:
+        extraConfig += ' --disable-gtk-doc'
+
+    @classmethod
+    def _getVersion(cls, name,
+            gitUrl="git://git.gnome.org/" + name,
+            branch="master"):
+        """Format version string from git.
+
+        This is just a utility method and won't do anything to the recipe itself
+        """
+        version = '%s+%s' % (
+            datetime.date.today().strftime("%y%m%d"),
+            _getGitRevision(gitUrl, branch)[:7]) # use the first 7 characters
+        print version
+        return version
+
+    def setup(r):
+        if r.__class__.__name__ == 'GnomePackageRecipe':
+            return
+
+        # this one is subtle. we don't want a pkg that loads GnomePackageRecipe to be a buildReq of itself
+        # since this turns into a lot of dep cicles inside rMake...
+        #r.clearBuildReqs('%(name)s') # doesn't work :/
+
+        r.macros.optflags = '-g -Os'
+
+        r.unpack()
+        r.configure()
+        r.make()
+        r.preInstall()
+        r.install()
+        r.postInstall()
+        r.policy()
+
+    def unpack(r):
+        '''There cases can be handled:
+
+        1. you need to use an archive instead of git snapshot, then
+        define r.externalArchive. Like this:
+            externalArchive = 'http://ftp.gnome.org/blah/blah.tar.gz'
+
+        2. you need to use other snapshots (either svn or git; bzr may be added
+        later), other than git.gnome.org, then define r.svnUrl or r.gitUrl.
+
+        3. you don't want to run 'NOCONFIGURE=yes ./autogen.sh', then define
+        r.autoGen as you like. 
+        For example your autogen.sh doesn't recognize 'NOCONFIGURE=yes':
+            autoGen = None. 
+            configureName = 'autogen.sh'
+        '''
+        if r.externalArchive:
+            r.addArchive(r.externalArchive)
+            # autogen isn't needed
+        else:
+            if r.svnUrl:
+                r.addSvnSnapshot(r.svnUrl)
+            else:
+                # if it's git, then the version _must_ be date+revision
+                r.macros.revision = r.macros.version.split("+")[1]
+                r.addGitSnapshot(r.gitUrl, tag="%(revision)s")
+            if r.autoGen:
+                r.Run(r.autoGen)
+
+        for patch in r.patches:
+            r.addPatch(patch)
+
+    def configure (r):
+        r.Configure(r.extraConfig,
+                    configureName = r.configureName,
+                    preConfigure = r.preConfigure)
+
+    def make (r):
+        r.Make(r.makeArgs, preMake=r.preMake)
+
+    def install(r):
+        r.MakeInstall(r.makeInstallArgs, preMake=r.preMakeInstall)
+        # this really needs to be the other way around, but we need
+        # to find a way to automate that first.
+        #r.Requires('%s:runtime' %r.macros.name,
+        #                '%(libdir)s/gnome-vfs-2.0/modules/.*',
+        #                '%(libdir)s/bonobo/.*',
+        #                '%(libdir)s/gtk-2.0/modules/.*',
+        #                '%(libdir)s/libglade/2.0/.*',
+        #                '%(libdir)s/orbit-2.0/.*')
+        r.Remove('%(libdir)s/gtk-2.0/modules/*.a',
+                 '%(libdir)s/bonobo/*.a',
+                 '%(libdir)s/libglade/2.0/*.a',
+                 allowNoMatch = True)
+
+        # Remove any autogenerated scrollkeeper cache files.
+        # Entirely disabling scrollkeeper-update when building
+        # the package is preferred, either by modifying the
+        # makefile, or passing an option to the configure script,
+        # if such an option exists.
+        r.Remove('%(localstatedir)s/lib/scrollkeeper/',
+                 '%(localstatedir)s/scrollkeeper/',
+                 recursive = True)
+
+        if r.docs:
+            r.Doc(*r.docs)
+
+        # GConf schemas should be in :data so that :lib depends on them
+        r.ComponentSpec('data', '%(sysconfdir)s/gconf/schemas/')
+
+        #  Don't ship icon caches
+        r.Remove('%(datadir)s/icons/*/icon-theme.cache', allowNoMatch = True)
+
+    def policy(r):
+        pass
+
+    def preInstall(r):
+        # save space
+        # strip unneeded translations from .mo files
+        # http://bugzilla.gnome.org/show_bug.cgi?id=474987
+        r.Run("""
+if [ -d po ] ; then
+cd po
+grep -v ".*[.]desktop[.]in[.]in$\|.*[.]server[.]in[.]in$\|.*[.]schemas[.]in$" POTFILES.in > POTFILES.keep
+mv POTFILES.keep POTFILES.in
+intltool-update --pot
+for p in *.po; do
+  echo msgmerge $p %(name)s.pot
+  msgmerge $p %(name)s.pot > $p.out
+  msgfmt -o `basename $p .po`.gmo $p.out
+done
+
+fi
+""")
+
+    def postInstall(r):
+        # save some space
+        r.Run("""
+if [ -d %(destdir)s/%(datadir)s/gnome/help/ ]; then
+   cd %(destdir)s%(datadir)s/gnome/help/;
+   for helpdir in $(ls); do
+       for f in $helpdir/C/figures/*.{png,jpg}; do
+           b="$(basename $f)"
+           echo $b
+           for d in $helpdir/*; do
+               if [ -d "$d" -a "$d" != "$helpdir/C" ]; then
+                  g="$d/figures/$b"
+                  if [ -f "$g" ]; then
+                     if cmp -s $f $g; then
+                        rm "$g"; ln -s "../../C/figures/$b" "$g"
+                     fi
+                  fi
+               fi
+           done
+       done
+    done
+fi
+""", dir = '%(destdir)s')
