@@ -72,18 +72,22 @@ then
             conary rq $trove:source=gnome.rpath.org@gnome:trunk --labels |
             awk -F '/' '{print $2}' |
             awk -F '-' '{print $1}'`
+        # latestVersion should be something like '090829+3417513'
+        # old packages will have old format, like '090829+r3417513', or 'r1234'
+
         # use '/bin/grep' to avoid user defined alias
         latestRevision=`
-            /usr/bin/git ls-remote --heads git://git.gnome.org/$module |
-            /bin/grep 'refs/heads/master' |
+            /usr/bin/git ls-remote --heads git://git.gnome.org/$module master |
             awk '{print $1}'`
+        # latestRevision should be something like 69f3f880ef350e2ca70be93e570a45d7e80b399c
+
         # keep aligned with gnomepackage;
-        # now use 4 chars from revison as version
-        latestRevision=r${latestRevision:0:4}
+        # now use 7 chars from revison as version
+        latestRevision=${latestRevision:0:7}
         printf "Latest version  of %-20s in conary is:%15s\n" $trove  $latestVersion
         printf "Latest revision of %-20s in git    is:%15s\n" $module $latestRevision
         revision_in_conary=`echo $latestVersion | cut -f2 -d '+'`
-        if [ "${revision_in_conary:0:5}" != "$latestRevision" ]
+        if [ "${revision_in_conary}" != "$latestRevision" ]
         then
             echo "refreshing $trove"
             cd $trove
