@@ -7,15 +7,15 @@
 import datetime
 subprocess=__import__('subprocess')
 
-def _getGitRevision(git_url, branch):
+def _getGitRevision(git_url):
     p = subprocess.Popen(["/usr/bin/git", "ls-remote", "--heads",
-                        git_url, branch],
+                        git_url, "master"],
                         stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                         env={"HOME": "/tmp/"})
     p.wait()
     data = p.stdout.read().strip()
     if p.returncode != 0:
-        print "revision not retrieved for branch %s on %s\n" % (branch, git_url)
+        print "revision not retrieved for master on %s\n" % git_url
         return
 
     # data should be of the format '<revision>  refs/heads/master'
@@ -36,7 +36,7 @@ class GnomePackageRecipe(CPackageRecipe):
 
     name = 'gnomepackage'
     majversion = '2.27'
-    version = datetime.date.today().strftime("%Y%m%d")
+    version = datetime.datetime.utcnow().strftime("%Y%m%d")
 
     extraConfig = ''
     preConfigure = ''
@@ -67,21 +67,18 @@ class GnomePackageRecipe(CPackageRecipe):
 
     @classmethod
     def _getVersion(cls, pkg_name,
-            git_url=None,
-            branch=None):
+            git_url=None):
         """Format version string from git.
 
         This is just a utility method and won't do anything to the recipe itself
         """
         if not git_url:
             git_url = "git://git.gnome.org/" + pkg_name
-        if not branch:
-            branch = "master"
 
         # use UTC
         date_part = datetime.datetime.utcnow().strftime("%y%m%d")
         # use the first 7 characters
-        revision_part = _getGitRevision(git_url, branch)[:7]
+        revision_part = _getGitRevision(git_url)[:7]
         return "%s+%s" % (date_part, revision_part)
 
     def setup(r):
