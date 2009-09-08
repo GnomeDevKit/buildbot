@@ -92,7 +92,7 @@ then
             echo "refreshing $trove"
             cd $trove
             cvc refresh >/dev/null 2>&1 || echo "error refreshing $trove"
-            cvc commit --message "New snapshot" >/dev/null 2>&1 ||
+            yes | cvc commit --message "New snapshot" >/dev/null 2>&1 ||
                 echo "error committing $trove"
             cd - >/dev/null 2>&1
         fi
