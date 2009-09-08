@@ -1,9 +1,12 @@
 GConf
 evolution-exchange
 glibmm
+glibmm
+gnome-keyring-manager
 gnome-media
 gnome-python
 gnome-python-desktop
 gnome-system-tools
 gtkmm
 intltool
+pyorbit
