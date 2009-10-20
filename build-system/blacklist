@@ -1,5 +1,7 @@
 GConf
+conduit
 evolution-exchange
+evolution-data-server
 glibmm
 glibmm
 gnome-keyring-manager

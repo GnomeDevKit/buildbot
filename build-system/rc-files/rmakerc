@@ -3,13 +3,6 @@
 resolveTrovesOnly   True
 buildLabel          gnome.rpath.org@gnome:trunk
 
-# needed by vinagre
-resolveTroves shared-mime-info:config=foresight.rpath.org@fl:2-devel
-
-# use gnome:trunk's, instead of from fl:2-devel; should be in group-world.recipe
-resolveTroves gmime=gnome.rpath.org@gnome:trunk
-resolveTroves DeviceKit-power=gnome.rpath.org@gnome:trunk
-
 # new stuff; not added in group-world yet
 resolveTroves gir-repository=gnome.rpath.org@gnome:trunk
 resolveTroves mutter=gnome.rpath.org@gnome:trunk
@@ -18,12 +11,11 @@ resolveTroves gobject-introspection=gnome.rpath.org@gnome:trunk
 resolveTroves mm-common=gnome.rpath.org@gnome:trunk # glibmm, gtkmm
 resolveTroves automake17=gnome.rpath.org@gnome:trunk # gtk
 
-# at-spi
-resolveTroves gail=foresight.rpath.org@fl:2-devel
-resolveTroves system-tools-backends=foresight.rpath.org@fl:2-devel
-
-# needed by nemiver
-resolveTroves gtksourceviewmm=foresight.rpath.org@fl:2-devel
+# don't use gnome:trunk:
+#resolveTroves gail=foresight.rpath.org@fl:2-devel
+#resolveTroves system-tools-backends=foresight.rpath.org@fl:2-devel
+# epiphany
+#resolveTroves WebKit=foresight.rpath.org@fl:2-devel
 
 resolveTroves group-world=gnome.rpath.org@gnome:trunk
 resolveTroves group-world=foresight.rpath.org@fl:2-devel
