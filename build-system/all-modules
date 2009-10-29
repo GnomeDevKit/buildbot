@@ -1,12 +1,18 @@
 GConf
+ORBit2
 alacarte
 at-spi
+atk
 banshee
 brasero
+bug-buddy
 cheese
 conduit
+dasher
+deskbar-applet
 eel
 empathy
+eog
 epiphany
 epiphany-extensions
 evolution
@@ -99,6 +105,7 @@ pyorbit
 rhythmbox
 seahorse
 sound-juicer
+system-tools-backends
 tomboy
 totem
 totem-pl-parser

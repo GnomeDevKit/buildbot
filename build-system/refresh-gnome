@@ -54,6 +54,7 @@ then
     echo $troves | xargs cvc co
     for trove in $troves;
     do
+        # trove is the package name; module is the repository name
         case $trove in
             GConf)
                 module="gconf"
@@ -63,6 +64,9 @@ then
                 ;;
             gtk)
                 module="gtk+"
+                ;;
+            system-tools-backends)
+                module="system-tools-backends-clone"
                 ;;
             *)
                 module=$trove
