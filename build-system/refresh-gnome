@@ -35,9 +35,9 @@ then
     shift
     troves=$*
 else
-    troves=`sort all-modules blacklist | uniq --unique`
-    echo Current blacklist includes:
-    cat blacklist
+    # first column of the file blacklist is the troves, so 'cut' them out
+    troves=$(sort all-modules <(cut -d ' ' -f1 blacklist) | uniq --unique)
+    echo Current blacklist includes: $(cut -d ' ' -f1 blacklist)
 fi
 
 if [[ ! $troves ]]
