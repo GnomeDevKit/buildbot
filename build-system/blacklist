@@ -18,4 +18,4 @@ nautilus # warnings being treated as errors
 rhythmbox # compile error (gst/interfaces/streamvolume.h: No such..)
 totem # needs gst* .25.1
 mutter # needs gir-reos built with various :devellibs to generate proper .gir files, but it only builds with old gtk/pango/others
-pango # build error, don't understand why it can't find Pango-1.0.typelib since gir-repo is already there
+eel # seems some api (gnome_bg_is_dark...) changed; this module looks dead anyway
