@@ -17,5 +17,5 @@ metacity # MetaNexus undefined? src/include/util.h #138
 nautilus # warnings being treated as errors
 rhythmbox # compile error (gst/interfaces/streamvolume.h: No such..)
 totem # needs gst* .25.1
-mutter # needs gir-reos built with various :devellibs to generate proper .gir files, but it only builds with old gtk/pango/others
+mutter #  WARNING **: Can't resolve type 'KeySym' for field Meta.KeyBinding.keysym
 eel # seems some api (gnome_bg_is_dark...) changed; this module looks dead anyway
