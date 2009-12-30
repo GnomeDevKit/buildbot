@@ -124,9 +124,7 @@ class GnomePackageRecipe(CPackageRecipe):
             elif r.gitUrl:
                 r.addGitSnapshot(r.gitUrl)
             else:
-                # if it's git, then the version _must_ be date+revision
-                r.macros.revision = r.macros.version.split("+")[1]
-                r.addGitSnapshot('git://git.gnome.org/%(name)s/', tag="%(revision)s")
+                r.addGitSnapshot('git://git.gnome.org/%(name)s/')
 
             if r.autoGen:
                 r.Run(r.autoGen)
