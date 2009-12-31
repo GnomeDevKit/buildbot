@@ -3,12 +3,10 @@ brasero # compile error
 empathy # wait for they release tp-glib 0.10; currently requires 0.9 but it's unstable release and can't go in fl:2-devel
 epiphany # wait for webkit 1.17, seems to have to build from git...
 epiphany-extensions # waits for epiphany
-gdm # error in parsing a translation file?
 glibmm
 gnome-icon-theme # they moved all build files (autogen.sh, configure) into a build/ dir.
-gnome-keyring-manager # docs/zh_CN/zh_CN.po seems to be malformed
+gnome-keyring-manager # docs/zh_CN/zh_CN.po seems to be malformed; deprecated
 gnome-media
-gnome-power-manager
 gnome-python
 gnome-python-desktop
 gtkmm
@@ -19,4 +17,3 @@ rhythmbox # compile error (gst/interfaces/streamvolume.h: No such..)
 totem # needs gst* .25.1
 mutter #  WARNING **: Can't resolve type 'KeySym' for field Meta.KeyBinding.keysym
 eel # seems some api (gnome_bg_is_dark...) changed; this module looks dead anyway
-libsoup # gnome-keyring-1.pc is missing from gnome-keyring:devellib?
