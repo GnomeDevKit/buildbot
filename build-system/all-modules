@@ -79,6 +79,7 @@ libbonoboui
 libgail-gnome
 libglade
 libgnome
+libgnome-keyring
 libgnomecanvas
 libgnomecups
 libgnomekbd
