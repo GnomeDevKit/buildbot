@@ -17,3 +17,5 @@ rhythmbox # compile error (gst/interfaces/streamvolume.h: No such..)
 totem # needs gst* .25.1
 mutter #  WARNING **: Can't resolve type 'KeySym' for field Meta.KeyBinding.keysym
 eel # seems some api (gnome_bg_is_dark...) changed; this module looks dead anyway
+conduit # configure.ac:162: required file `conduit/modules/GoogleModule/atom/Makefile.in' not found
+dasher # config.status: error: po/Makefile.in.in was not created by intltoolize
