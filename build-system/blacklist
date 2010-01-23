@@ -20,3 +20,4 @@ eel # seems some api (gnome_bg_is_dark...) changed; this module looks dead anywa
 conduit # configure.ac:162: required file `conduit/modules/GoogleModule/atom/Makefile.in' not found
 dasher # config.status: error: po/Makefile.in.in was not created by intltoolize
 libgnomekbd # Requested 'libxklavier >= 5.0' but version of libxklavier is 4.0
+gnome-settings-daemon # same as above
