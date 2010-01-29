@@ -1,6 +1,5 @@
 at-spi # compile error
 brasero # compile error
-empathy # wait for they release tp-glib 0.10; currently requires 0.9 but it's unstable release and can't go in fl:2-devel
 epiphany # wait for webkit 1.17, seems to have to build from git...
 epiphany-extensions # waits for epiphany
 glibmm
