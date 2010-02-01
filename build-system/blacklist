@@ -1,22 +1,18 @@
-at-spi # compile error
-brasero # compile error
-epiphany # wait for webkit 1.17, seems to have to build from git...
-epiphany-extensions # waits for epiphany
+epiphany-extensions # ephy-sidebar-embed.c:174: error: 'EphyEmbedEventContext' undeclared; 010201
 glibmm
-gnome-icon-theme # they moved all build files (autogen.sh, configure) into a build/ dir.
-gnome-keyring-manager # docs/zh_CN/zh_CN.po seems to be malformed; deprecated
+gnome-icon-theme # typo in Makefile, https://bugzilla.gnome.org/show_bug.cgi?id=608237
+gnome-keyring-manager # deprecated
 gnome-media
 gnome-python
 gnome-python-desktop
 gtkmm
 intltool
-metacity # MetaNexus undefined? src/include/util.h #138
-nautilus # warnings being treated as errors
-rhythmbox # compile error (gst/interfaces/streamvolume.h: No such..)
+nautilus # warnings being treated as errors; 010201
 totem # needs gst* .25.1
-mutter #  WARNING **: Can't resolve type 'KeySym' for field Meta.KeyBinding.keysym
+mutter #  WARNING **: Can't resolve type 'KeySym' for field Meta.KeyBinding.keysym; 100201+5764176-1
 eel # seems some api (gnome_bg_is_dark...) changed; this module looks dead anyway
-conduit # configure.ac:162: required file `conduit/modules/GoogleModule/atom/Makefile.in' not found
 dasher # config.status: error: po/Makefile.in.in was not created by intltoolize
 libgnomekbd # Requested 'libxklavier >= 5.0' but version of libxklavier is 4.0
 gnome-settings-daemon # same as above
+gnome-mag # No rule to make target `../tools/spec-to-introspect.xsl', needed by `introspection/org.freedesktop.gnome.Magnifier'.  Stop
+gnome-power-manager # need autoconf 2.65 (we are 2.64)
