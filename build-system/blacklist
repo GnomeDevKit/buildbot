@@ -1,6 +1,4 @@
-epiphany-extensions # ephy-sidebar-embed.c:174: error: 'EphyEmbedEventContext' undeclared; 010201
 glibmm
-gnome-icon-theme # typo in Makefile, https://bugzilla.gnome.org/show_bug.cgi?id=608237
 gnome-keyring-manager # deprecated
 gnome-media
 gnome-python
