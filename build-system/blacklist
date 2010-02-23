@@ -7,7 +7,6 @@ gtkmm
 intltool
 nautilus # warnings being treated as errors; 010201
 totem # needs gst* .25.1
-mutter #  WARNING **: Can't resolve type 'KeySym' for field Meta.KeyBinding.keysym; 100201+5764176-1
 eel # seems some api (gnome_bg_is_dark...) changed; this module looks dead anyway
 dasher # config.status: error: po/Makefile.in.in was not created by intltoolize
 libgnomekbd # Requested 'libxklavier >= 5.0' but version of libxklavier is 4.0
