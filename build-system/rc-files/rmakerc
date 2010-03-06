@@ -10,3 +10,7 @@ resolveTroves automake17=gnome.rpath.org@gnome:trunk # gtk
 
 resolveTroves group-world=gnome.rpath.org@gnome:trunk
 resolveTroves group-world=foresight.rpath.org@fl:2-devel
+
+defaultBuildReqs python:bin
+defaultBuildReqs info-rmake-chroot
+defaultBuildReqs info-rmake
