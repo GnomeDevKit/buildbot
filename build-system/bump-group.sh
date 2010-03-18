@@ -15,6 +15,7 @@ echo "Group version bumped"
 
 echo "Cooking group-world"
 ./cook.sh
-tail log
+grep -i warning log
+grep -i error log
 
 cd $currentDir
