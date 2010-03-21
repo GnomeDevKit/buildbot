@@ -5,10 +5,8 @@ gnome-python
 gnome-python-desktop
 gtkmm
 intltool
-nautilus # warnings being treated as errors; 010201
 totem # needs gst* .25.1
 eel # seems some api (gnome_bg_is_dark...) changed; this module looks dead anyway
 dasher # config.status: error: po/Makefile.in.in was not created by intltoolize
 gnome-mag # No rule to make target `../tools/spec-to-introspect.xsl', needed by `introspection/org.freedesktop.gnome.Magnifier'.  Stop
-gnome-power-manager # need autoconf 2.65 (we are 2.64)
 gnome-screensaver # need libx11 1.3, now is 1.2.2
