@@ -3,11 +3,6 @@
 resolveTrovesOnly   True
 buildLabel          gnome.rpath.org@gnome:trunk
 
-# new stuff; not added in group-world yet
-resolveTroves mm-common=gnome.rpath.org@gnome:trunk # glibmm, gtkmm
-resolveTroves automake17=gnome.rpath.org@gnome:trunk # gtk
-
-
 resolveTroves group-world=gnome.rpath.org@gnome:trunk
 resolveTroves group-world=foresight.rpath.org@fl:2-devel
 
