@@ -1,5 +1,4 @@
 glibmm
-gnome-keyring-manager # deprecated
 gnome-media
 gnome-python
 gnome-python-desktop
