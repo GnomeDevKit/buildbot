@@ -1,7 +1,33 @@
+[gnome:unstable]
+#resolveTrovesOnly   True
+buildLabel          gnome.rpath.org@gnome:unstable
+
+defaultBuildReqs python:bin
+defaultBuildReqs info-rmake-chroot
+defaultBuildReqs info-rmake
+
+resolveTroves info-rmake=conary.rpath.com@rpl:2-qa
+resolveTroves info-rmake-chroot=conary.rpath.com@rpl:2-qa
+resolveTroves kernel=foresight.rpath.org@fl:2-devel-kernel/2.6.29.3-1-1
+
+resolveTroves glib=gnome.rpath.org@gnome:unstable
+resolveTroves gdk-pixbuf=gnome.rpath.org@gnome:unstable
+resolveTroves group-world=foresight.rpath.org@fl:2-devel
+
 [gnome:trunk]
 
 resolveTrovesOnly   True
 buildLabel          gnome.rpath.org@gnome:trunk
+
+resolveTroves conary=foresight.rpath.org@fl:2-devel
+resolveTroves conary-build=foresight.rpath.org@fl:2-devel
+resolveTroves conary-repository=foresight.rpath.org@fl:2-devel
+resolveTroves conary-policy=foresight.rpath.org@fl:2-devel
+
+resolveTroves gtk=gnome.rpath.org@gnome:trunk
+resolveTroves glib=gnome.rpath.org@gnome:trunk
+resolveTroves gdk-pixbuf=gnome.rpath.org@gnome:trunk
+resolveTroves pygtk=gnome.rpath.org@gnome:trunk
 
 resolveTroves group-world=gnome.rpath.org@gnome:trunk
 resolveTroves group-world=foresight.rpath.org@fl:2-devel
