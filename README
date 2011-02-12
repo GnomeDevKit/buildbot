@@ -6,4 +6,4 @@ Here are some scripts for maintaining the Gnome Developer Kit
 Maintenance has gone to github in order for easy share between the several
 maintainers, so we can avoid asking for accounts on git.gnome.org.
 
-[0]. http://github.com/zhangsen/gnome-developer-kit/tree
+[0]. http://github.com/GnomeDevKit/buildbot/
